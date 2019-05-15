@@ -5,6 +5,7 @@
   </Configs>
   <NewExtensions>
     <extension index="0">extensions\GMStrategist</extension>
+    <extension index="1">extensions\GMAssert</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites"/>
@@ -76,6 +77,16 @@
         <script>scripts\mm_trial_play_async.gml</script>
       </scripts>
     </scripts>
+    <scripts name="GmStrategistTest">
+      <scripts name="Unit">
+        <script>scripts\gmst_utest_all.gml</script>
+        <script>scripts\gmst_utest_sanity.gml</script>
+      </scripts>
+      <scripts name="Integration">
+        <script>scripts\gmst_itest_all.gml</script>
+        <script>scripts\gmst_itest_sanity.gml</script>
+      </scripts>
+    </scripts>
   </scripts>
   <objects name="objects">
     <objects name="GmStrategist">
@@ -88,7 +99,13 @@
         <object>objects\__obj_minimax_trial_play_daemon__</object>
       </objects>
     </objects>
+    <objects name="GmStrategistTest">
+      <object>objects\obj_gmst_test_daemon</object>
+    </objects>
   </objects>
+  <rooms name="rooms">
+    <room>rooms\rm_test</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
