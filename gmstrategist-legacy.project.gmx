@@ -100,6 +100,17 @@
         <script>scripts\tictactoe_apply_move.gml</script>
         <script>scripts\tictactoe_playout_result.gml</script>
       </scripts>
+      <scripts name="IntransitiveDice">
+        <script>scripts\IntransitiveDiceState.gml</script>
+        <script>scripts\IntransitiveDiceResult.gml</script>
+        <script>scripts\intransitivedice_generate_moves.gml</script>
+        <script>scripts\intransitivedice_generate_random.gml</script>
+        <script>scripts\intransitivedice_current_player.gml</script>
+        <script>scripts\intransitivedice_is_final.gml</script>
+        <script>scripts\intransitivedice_is_legal.gml</script>
+        <script>scripts\intransitivedice_apply_move.gml</script>
+        <script>scripts\intransitivedice_playout_result.gml</script>
+      </scripts>
     </scripts>
     <scripts name="ExampleGamesTest">
       <scripts name="TicTacToe">
@@ -111,6 +122,17 @@
         <script>scripts\tictactoe_test_is_legal.gml</script>
         <script>scripts\tictactoe_test_apply_move.gml</script>
         <script>scripts\tictactoe_test_playout_result.gml</script>
+      </scripts>
+      <scripts name="IntransitiveDice">
+        <script>scripts\intransitivedice_test_all.gml</script>
+        <script>scripts\intransitivedice_test_constructor.gml</script>
+        <script>scripts\intransitivedice_test_generate_moves.gml</script>
+        <script>scripts\intransitivedice_test_generate_random.gml</script>
+        <script>scripts\intransitivedice_test_current_player.gml</script>
+        <script>scripts\intransitivedice_test_is_final.gml</script>
+        <script>scripts\intransitivedice_test_is_legal.gml</script>
+        <script>scripts\intransitivedice_test_apply_move.gml</script>
+        <script>scripts\intransitivedice_test_playout_result.gml</script>
       </scripts>
     </scripts>
   </scripts>

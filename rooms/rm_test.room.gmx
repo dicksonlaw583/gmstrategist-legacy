@@ -12,6 +12,7 @@
   <showcolour>-1</showcolour>
   <code>gmst_utest_all();
 tictactoe_test_all();
+intransitivedice_test_all();
 gmst_itest_all();</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
