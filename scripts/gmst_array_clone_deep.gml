@@ -19,7 +19,7 @@ Return a recursive clone of the given array.
   // 2D mode
   else {
     for (var i = array_height_2d(argument0)-1; i >= 0; i--) {
-      for (var j = array_length_2d(argument0, i); j >= 0; j--) {
+      for (var j = array_length_2d(argument0, i)-1; j >= 0; j--) {
         if (is_array(argument0[i, j])) {
           _newarr[i, j] = gmst_array_clone_deep(argument0[i, j]);
         } else {

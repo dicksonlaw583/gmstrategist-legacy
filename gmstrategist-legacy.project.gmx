@@ -82,6 +82,7 @@
         <script>scripts\gmst_utest_all.gml</script>
         <script>scripts\gmst_utest_sanity.gml</script>
         <script>scripts\gmst_utest_utilities.gml</script>
+        <script>scripts\gmst_utest_constructors.gml</script>
       </scripts>
       <scripts name="Integration">
         <script>scripts\gmst_itest_all.gml</script>
