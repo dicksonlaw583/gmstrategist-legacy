@@ -1,7 +1,7 @@
 ///Ruleset(scr_decode, scr_encode, scr_cleanup, scr_is_final, scr_generate_moves, scr_generate_random, scr_current_player, scr_is_legal, scr_apply_move, scr_playout_result)
 /**
 Ruleset[
-  (Memento m, @State|undefined s => State|undefined) SCR_DECODE, // Unpickle serialized state
+  (Memento m, (@State|undefined) s => State|undefined) SCR_DECODE, // Unpickle serialized state
   (State s => Memento) SCR_ENCODE // Pickle live state
   (@State s => -) SCR_CLEANUP, // Free the live state
   (State s => Bool), SCR_IS_FINAL // Return whether the state is a finished game
@@ -19,7 +19,7 @@ enum RULESET {
   SCR_CLEANUP,
   SCR_IS_FINAL,
   SCR_GENERATE_MOVES,
-  SCR_GENERATE_RAND,
+  SCR_GENERATE_RANDOM,
   SCR_CURRENT_PLAYER,
   SCR_IS_LEGAL,
   SCR_APPLY_MOVE,
