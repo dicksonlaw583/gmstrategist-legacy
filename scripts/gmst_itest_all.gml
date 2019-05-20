@@ -23,6 +23,10 @@ if (os_browser == browser_not_a_browser) {
 // Asynchronous tests
 with (instance_create(0, 0, obj_gmst_test_daemon)) {
   ___test___[0] = gmst_itest_sanity;
+  ___test___[1] = gmst_itest_mcts_node_state_async;
+  ___test___[2] = gmst_itest_mm_node_state_async;
+  ___test___[3] = gmst_itest_mcts_root_state_async;
+  ___test___[4] = gmst_itest_mm_root_state_async;
   script_execute(___test___[0], TEST_PHASE.SETUP);
 }
 

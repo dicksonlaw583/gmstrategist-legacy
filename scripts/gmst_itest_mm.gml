@@ -44,7 +44,7 @@ configs = MmConfigs(
   tictactoe_heuristic,
   tictactoe_interpret_result_mm,
   undefined,
-  true
+  false
 );
 state = TicTacToeState(
   X, _, _,

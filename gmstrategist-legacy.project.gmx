@@ -88,9 +88,13 @@
       </scripts>
       <scripts name="Integration">
         <script>scripts\gmst_itest_all.gml</script>
-        <script>scripts\gmst_itest_sanity.gml</script>
         <script>scripts\gmst_itest_mcts.gml</script>
         <script>scripts\gmst_itest_mm.gml</script>
+        <script>scripts\gmst_itest_sanity.gml</script>
+        <script>scripts\gmst_itest_mcts_node_state_async.gml</script>
+        <script>scripts\gmst_itest_mcts_root_state_async.gml</script>
+        <script>scripts\gmst_itest_mm_node_state_async.gml</script>
+        <script>scripts\gmst_itest_mm_root_state_async.gml</script>
       </scripts>
     </scripts>
     <scripts name="ExampleGames">
