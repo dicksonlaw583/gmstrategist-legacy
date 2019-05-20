@@ -18,7 +18,7 @@ Return an array of immediate next moves in descending order of value, as indicat
   }
   // Pop out moves biggest first
   for (var i = 0; i < root_children_count; i++) {
-    if (root[MM_NODE.POLARITY] > 0) {
+    if (root[MM_NODE.POLARITY]) {
       result[i] = ds_priority_delete_max(pq);
     } else {
       result[i] = ds_priority_delete_min(pq);

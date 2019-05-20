@@ -21,7 +21,7 @@ result[n, 1] = Value
   // Pop out moves biggest first
   for (var i = 0; i < root_children_count; i++) {
     var current_child;
-    if (root[MM_NODE.POLARITY] > 0) {
+    if (root[MM_NODE.POLARITY]) {
       current_child = ds_priority_delete_max(pq);
     } else {
       current_child = ds_priority_delete_min(pq);

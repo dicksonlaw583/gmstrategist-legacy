@@ -1,4 +1,4 @@
-///tictactoe_test_playout_result()
+///tictactoe_test_playout_result_mcts()
 var _ = -1,
     O = 0,
     X = 1;
@@ -12,9 +12,9 @@ state = TicTacToeState(
   O
 );
 result = tictactoe_playout_result(state);
-got = tictactoe_interpret_result(state, result, X, undefined);
+got = tictactoe_interpret_result_mcts(state, result, X, undefined);
 assert_equal(got, 1, "X player win gives wrong interpretation for X!");
-got = tictactoe_interpret_result(state, result, O, undefined);
+got = tictactoe_interpret_result_mcts(state, result, O, undefined);
 assert_equal(got, 0, "X player win gives wrong interpretation for O!");
 
 // O player win
@@ -25,9 +25,9 @@ state = TicTacToeState(
   X
 );
 result = tictactoe_playout_result(state);
-got = tictactoe_interpret_result(state, result, X, undefined);
+got = tictactoe_interpret_result_mcts(state, result, X, undefined);
 assert_equal(got, 0, "O player win gives wrong interpretation for X!");
-got = tictactoe_interpret_result(state, result, O, undefined);
+got = tictactoe_interpret_result_mcts(state, result, O, undefined);
 assert_equal(got, 1, "O player win gives wrong interpretation for O!");
 
 // Draw
@@ -38,9 +38,9 @@ state = TicTacToeState(
   O
 );
 result = tictactoe_playout_result(state);
-got = tictactoe_interpret_result(state, result, X, undefined);
+got = tictactoe_interpret_result_mcts(state, result, X, undefined);
 assert_equalish(got, 0.5, "Draw gives wrong interpretation for X!");
-got = tictactoe_interpret_result(state, result, O, undefined);
+got = tictactoe_interpret_result_mcts(state, result, O, undefined);
 assert_equalish(got, 0.5, "Draw gives wrong interpretation for O!");
 
 // Non-final state
@@ -51,8 +51,8 @@ state = TicTacToeState(
   X
 );
 result = tictactoe_playout_result(state);
-got = tictactoe_interpret_result(state, result, X, undefined);
+got = tictactoe_interpret_result_mcts(state, result, X, undefined);
 assert_equalish(got, 0.5, "Non-final state gives wrong interpretation for X!");
-got = tictactoe_interpret_result(state, result, O, undefined);
+got = tictactoe_interpret_result_mcts(state, result, O, undefined);
 assert_equalish(got, 0.5, "Non-final state gives wrong interpretation for O!");
 

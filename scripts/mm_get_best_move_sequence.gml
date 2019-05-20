@@ -24,7 +24,7 @@ Return the sequence of best moves for each player in sequence, as indicated by t
     for (var i = root_children_count-1; i >= 1; i--) {
       current_node = root_children[i];
       current_value = current_node[MM_NODE.VALUE];
-      if ((root[MM_NODE.POLARITY] > 0) == (current_value > best_value)) {
+      if ((!!root[MM_NODE.POLARITY]) == (current_value > best_value)) {
         best_move = current_node[MM_NODE.LAST_MOVE];
         best_move_num = i;
         best_value = current_value;

@@ -10,7 +10,8 @@ The stack is used between calls to this function. This allows non-blocking expan
       max_ms = argument2,
       stack = argument3,
       config = argument0[MM_TREE.CONFIGS],
-      ruleset = argument0[MM_TREE.RULESET];
+      ruleset = argument0[MM_TREE.RULESET],
+      node_state_mode = config[MM_CONFIGS.NODE_STATE_MODE];
   // Stack frame
   var current_stack_frame,
       current_node,
@@ -27,8 +28,12 @@ The stack is used between calls to this function. This allows non-blocking expan
       done = false;
   if (ds_stack_empty(stack)) {
     current_node = tree[MM_TREE.ROOT];
-    current_state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MM_TREE.ROOT_PICKLE]);
-    available_moves = array_create(0);
+    if (node_state_mode) {
+      current_state = script_execute(ruleset[RULESET.SCR_DECODE], current_node[MM_NODE.MEMO], undefined);
+    } else {
+      current_state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MM_TREE.ROOT_PICKLE], undefined);
+    }
+    available_moves = undefined;
     current_depth = max_depth;
     current_node_children = current_node[MM_NODE.CHILDREN];
     current_child_num = 0;
@@ -39,7 +44,11 @@ The stack is used between calls to this function. This allows non-blocking expan
   } else {
     current_stack_frame = ds_stack_pop(stack);
     current_node = current_stack_frame[MM_STACK_FRAME.NODE];
-    current_state = script_execute(ruleset[RULESET.SCR_DECODE], current_stack_frame[MM_STACK_FRAME.STATE_PICKLE]);
+    if (node_state_mode) {
+      current_state = script_execute(ruleset[RULESET.SCR_DECODE], current_node[MM_NODE.MEMO], undefined);
+    } else {
+      current_state = script_execute(ruleset[RULESET.SCR_DECODE], current_stack_frame[MM_STACK_FRAME.STATE_PICKLE], undefined);
+    }
     available_moves = current_stack_frame[MM_STACK_FRAME.MOVES];
     current_depth = current_stack_frame[MM_STACK_FRAME.DEPTH];
     current_node_children = current_node[MM_NODE.CHILDREN];
@@ -80,27 +89,58 @@ The stack is used between calls to this function. This allows non-blocking expan
         // Generate available moves
         available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
         // Create a stack frame remembering current state
-        ds_stack_push(stack, MmStackFrame(
-          script_execute(ruleset[RULESET.SCR_ENCODE], current_state),
-          current_node,
-          available_moves,
-          current_child_num,
-          current_depth--,
-          alpha,
-          beta,
-          total_weight,
-          progress_weight
-        ));
+        if (node_state_mode) {
+          ds_stack_push(stack, MmStackFrame(
+            undefined,
+            current_node,
+            available_moves,
+            current_child_num,
+            current_depth--,
+            alpha,
+            beta,
+            total_weight,
+            progress_weight
+          ));
+        } else {
+          ds_stack_push(stack, MmStackFrame(
+            script_execute(ruleset[RULESET.SCR_ENCODE], current_state),
+            current_node,
+            available_moves,
+            current_child_num,
+            current_depth--,
+            alpha,
+            beta,
+            total_weight,
+            progress_weight
+          ));
+        }
         // Apply current move
         script_execute(ruleset[RULESET.SCR_APPLY_MOVE], current_state, available_moves[current_child_num]);
         // Expand first child node
         current_node_children = current_node[MM_NODE.CHILDREN];
-        current_node_children[@current_child_num] = MmNode(
-          available_moves[current_child_num],
-          script_execute(config[MM_CONFIGS.SCR_POLARITY], script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], current_state, config[MM_CONFIGS.ARG_POLARITY])),
-          undefined,
-          array_create(0)
-        );
+        if (is_undefined(current_node_children)) {
+          current_node_children = array_create(0);
+          current_node[@MM_NODE.CHILDREN] = current_node_children;
+        }
+        if (node_state_mode) {
+          current_node_children[@current_child_num] = MmNode(
+            available_moves[current_child_num],
+            script_execute(config[MM_CONFIGS.SCR_POLARITY], script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], current_state), current_state, config[MM_CONFIGS.ARG_POLARITY]),
+            undefined,
+            undefined,
+            script_execute(ruleset[RULESET.SCR_ENCODE], current_state),
+            undefined
+          );
+        } else {
+          current_node_children[@current_child_num] = MmNode(
+            available_moves[current_child_num],
+            script_execute(config[MM_CONFIGS.SCR_POLARITY], script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], current_state), current_state, config[MM_CONFIGS.ARG_POLARITY]),
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
+        }
         // Focus to current child
         progress_weight /= array_length_1d(available_moves);
         total_weight += progress_weight*current_child_num;
@@ -126,7 +166,7 @@ The stack is used between calls to this function. This allows non-blocking expan
       var current_child = current_node_children[current_child_num],
           ccv = current_child[MM_NODE.VALUE];
       // If it is a max node:
-      if (current_node[MM_NODE.POLARITY] > 0) {
+      if (current_node[MM_NODE.POLARITY]) {
         // Update node value and frame alpha
         if (is_undefined(current_node[MM_NODE.VALUE]) || ccv > current_node[MM_NODE.VALUE]) {
           current_node[@MM_NODE.VALUE] = ccv;
@@ -152,7 +192,18 @@ The stack is used between calls to this function. This allows non-blocking expan
       // Still more to evaluate
       else {
         // Decode state
-        current_state = script_execute(ruleset[RULESET.SCR_DECODE], current_stack_frame[MM_STACK_FRAME.STATE_PICKLE]);
+        var decode_result;
+        if (node_state_mode) {
+          decode_result = script_execute(ruleset[RULESET.SCR_DECODE], current_node[MM_NODE.MEMO], current_state);
+        } else {
+          decode_result = script_execute(ruleset[RULESET.SCR_DECODE], current_stack_frame[MM_STACK_FRAME.STATE_PICKLE], current_state);
+        }
+        if (!is_undefined(decode_result)) {
+          if (!is_undefined(ruleset[RULESET.SCR_CLEANUP])) {
+            script_execute(ruleset[RULESET.SCR_CLEANUP], current_state);
+          }
+          current_state = decode_result;
+        }
         // Schedule to apply the next available move
         current_child_num++;
         // Change direction to downwards

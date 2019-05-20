@@ -19,7 +19,7 @@ Return the best immediate next move, as indicated by the given tree.
   for (var i = root_children_count-1; i >= 1; i--) {
     current_node = root_children[i];
     current_value = current_node[MM_NODE.VALUE];
-    if ((root[MM_NODE.POLARITY] > 0) == (current_node[MM_NODE.VALUE] > best_value)) {
+    if ((!!root[MM_NODE.POLARITY]) == (current_node[MM_NODE.VALUE] > best_value)) {
       best_move = current_node[MM_NODE.LAST_MOVE];
       best_value = current_value;
     }

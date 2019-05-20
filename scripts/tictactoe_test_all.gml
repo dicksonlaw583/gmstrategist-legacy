@@ -12,7 +12,9 @@ tictactoe_test_is_final();
 tictactoe_test_is_legal();
 tictactoe_test_apply_move();
 tictactoe_test_playout_result();
-tictactoe_test_interpret_result();
+tictactoe_test_interpret_result_mcts();
+tictactoe_test_interpret_result_mm();
+tictactoe_test_heuristic();
 
 // End tests
 time_b = current_time;

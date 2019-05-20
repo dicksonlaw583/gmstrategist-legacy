@@ -7,18 +7,25 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
   var tree = argument0,
       max_depth = argument1,
       config = argument0[MM_TREE.CONFIGS],
-      ruleset = argument0[MM_TREE.RULESET];
+      ruleset = argument0[MM_TREE.RULESET],
+      node_state_mode = config[MM_CONFIGS.NODE_STATE_MODE];
   // Fake call stack
   var stack = ds_stack_create(),
       current_node = tree[MM_TREE.ROOT],
-      current_state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MM_TREE.ROOT_PICKLE]),
-      available_moves = array_create(0),
+      available_moves = undefined,
       current_depth = max_depth,
       current_node_children = current_node[MM_NODE.CHILDREN],
       current_child_num = 0,
       alpha = undefined,
       beta = undefined,
       stackdir = true; // True for downwards, false for upwards
+  // Start the main state
+  var current_state;
+  if (node_state_mode) {
+    current_state = script_execute(ruleset[RULESET.SCR_DECODE], current_node[MM_NODE.MEMO], undefined);
+  } else {
+    current_state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MM_TREE.ROOT_PICKLE], undefined);
+  }
   // As long as the stack isn't empty
   do {
     // Downwards
@@ -48,27 +55,58 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
         // Generate available moves
         available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
         // Create a stack frame remembering current state
-        ds_stack_push(stack, MmStackFrame(
-          script_execute(ruleset[RULESET.SCR_ENCODE], current_state),
-          current_node,
-          available_moves,
-          current_child_num,
-          current_depth--,
-          alpha,
-          beta,
-          0,
-          0
-        ));
+        if (node_state_mode) {
+          ds_stack_push(stack, MmStackFrame(
+            undefined,
+            current_node,
+            available_moves,
+            current_child_num,
+            current_depth--,
+            alpha,
+            beta,
+            0,
+            0
+          ));
+        } else {
+          ds_stack_push(stack, MmStackFrame(
+            script_execute(ruleset[RULESET.SCR_ENCODE], current_state),
+            current_node,
+            available_moves,
+            current_child_num,
+            current_depth--,
+            alpha,
+            beta,
+            0,
+            0
+          ));
+        }
         // Apply current move
         script_execute(ruleset[RULESET.SCR_APPLY_MOVE], current_state, available_moves[current_child_num]);
         // Expand first child node
         current_node_children = current_node[MM_NODE.CHILDREN];
-        current_node_children[@current_child_num] = MmNode(
-          available_moves[current_child_num],
-          script_execute(config[MM_CONFIGS.SCR_POLARITY], script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], current_state, config[MM_CONFIGS.ARG_POLARITY])),
-          undefined,
-          array_create(0)
-        );
+        if (is_undefined(current_node_children)) {
+          current_node_children = array_create(0);
+          current_node[@MM_NODE.CHILDREN] = current_node_children;
+        }
+        if (node_state_mode) {
+          current_node_children[@current_child_num] = MmNode(
+            available_moves[current_child_num],
+            script_execute(config[MM_CONFIGS.SCR_POLARITY], script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], current_state), current_state, config[MM_CONFIGS.ARG_POLARITY]),
+            undefined,
+            undefined,
+            script_execute(ruleset[RULESET.SCR_ENCODE], current_state),
+            undefined
+          );
+        } else {
+          current_node_children[@current_child_num] = MmNode(
+            available_moves[current_child_num],
+            script_execute(config[MM_CONFIGS.SCR_POLARITY], script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], current_state), current_state, config[MM_CONFIGS.ARG_POLARITY]),
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
+        }
         // Focus to current child
         current_node = current_node_children[current_child_num];
         current_child_num = 0;
@@ -90,7 +128,7 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
       var current_child = current_node_children[current_child_num],
           ccv = current_child[MM_NODE.VALUE];
       // If it is a max node:
-      if (current_node[MM_NODE.POLARITY] > 0) {
+      if (current_node[MM_NODE.POLARITY]) {
         // Update node value and frame alpha
         if (is_undefined(current_node[MM_NODE.VALUE]) || ccv > current_node[MM_NODE.VALUE]) {
           current_node[@MM_NODE.VALUE] = ccv;
@@ -116,7 +154,18 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
       // Still more to evaluate
       else {
         // Decode the current frame's state
-        current_state = script_execute(ruleset[RULESET.SCR_DECODE], current_stack_frame[MM_STACK_FRAME.STATE_PICKLE]);
+        var decode_result;
+        if (node_state_mode) {
+          decode_result = script_execute(ruleset[RULESET.SCR_DECODE], current_node[MM_NODE.MEMO], current_state);
+        } else {
+          decode_result = script_execute(ruleset[RULESET.SCR_DECODE], current_stack_frame[MM_STACK_FRAME.STATE_PICKLE], current_state);
+        }
+        if (!is_undefined(decode_result)) {
+          if (!is_undefined(ruleset[RULESET.SCR_CLEANUP])) {
+            script_execute(ruleset[RULESET.SCR_CLEANUP], current_state);
+          }
+          current_state = decode_result;
+        }
         // Schedule to apply the next available move
         current_child_num++;
         // Change direction to downwards

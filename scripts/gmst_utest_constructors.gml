@@ -67,9 +67,32 @@ got = RawMctsTree(
 assert_equal(got, expected, "RawMctsTree constructor failed!");
 expected = undefined;
 
-//? MctsTree
-//? MctsTree with node state mode on
-//? MctsTree with node state mode off
+// MctsTree with node state mode on
+expected = RawMctsTree(
+  MctsNode(undefined, undefined, 0, 0, 0, undefined, "state", undefined),
+  undefined,
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, 44, 55, 66, 77),
+  MctsConfigs(111, 222, 333, 444, 555, 666, true)
+);
+got = MctsTree(
+  "state",
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, 44, 55, 66, 77),
+  MctsConfigs(111, 222, 333, 444, 555, 666, true)
+);
+assert_equal(got, expected, "MctsTree constructor failed with node state mode on!");
+// MctsTree with node state mode off
+expected = RawMctsTree(
+  MctsNode(undefined, undefined, 0, 0, 0, undefined, undefined, undefined),
+  "state",
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, 44, 55, 66, 77),
+  MctsConfigs(111, 222, 333, 444, 555, 666, false)
+);
+got = MctsTree(
+  "state",
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, 44, 55, 66, 77),
+  MctsConfigs(111, 222, 333, 444, 555, 666, false)
+);
+assert_equal(got, expected, "MctsTree constructor failed with node state mode off!");
 got = undefined;
 expected = undefined;
 
@@ -122,9 +145,32 @@ assert_equal(got, expected, "RawMmTree constructor failed!");
 got = undefined;
 expected = undefined;
 
-//? MmTree
-//? MmTree with node state mode on
-//? MmTree with node state mode off
+// MmTree with node state mode on
+expected = RawMmTree(
+  MmNode(undefined, 583, undefined, undefined, 583, undefined),
+  undefined,
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, gmst_identity, 55, 66, 77),
+  MmConfigs(gmst_identity, 111, 222, 333, true)
+);
+got = MmTree(
+  583,
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, gmst_identity, 55, 66, 77),
+  MmConfigs(gmst_identity, 111, 222, 333, true)
+);
+assert_equal(got, expected, "MmTree constructor failed with node state mode on!");
+// MmTree with node state mode off
+expected = RawMmTree(
+  MmNode(undefined, 583, undefined, undefined, undefined, undefined),
+  583,
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, gmst_identity, 55, 66, 77),
+  MmConfigs(gmst_identity, 111, 222, 333, false)
+);
+got = MmTree(
+  583,
+  Ruleset(gmst_identity, gmst_identity, undefined, 11, 22, 33, gmst_identity, 55, 66, 77),
+  MmConfigs(gmst_identity, 111, 222, 333, false)
+);
+assert_equal(got, expected, "MmTree constructor failed with node state mode off!");
 got = undefined;
 expected = undefined;
 

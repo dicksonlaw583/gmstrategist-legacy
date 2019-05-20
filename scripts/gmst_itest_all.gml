@@ -6,6 +6,7 @@ time_a = current_time;
 
 // Run synchronous tests
 gmst_itest_mcts();
+gmst_itest_mm();
 
 // End synchronous tests
 time_b = current_time;

@@ -3,7 +3,7 @@
 Build a new set of Minimax configurations.
 
 MmConfigs[
-  (Player p, State s, ? arg => -1|1) SCR_POLARITY, // Return -1 if the player is minimizing, 1 if the player is maximizing
+  (Player p, State s, ? arg => Bool|undefined) SCR_POLARITY, // Return falsy value if the player is minimizing, truthy value if the player is maximizing, undefined if randomizing
   ? ARG_POLARITY, // Arguments to pass to scr_polarity
   (State s, ? arg => Real) SCR_HEURISTIC, // The heuristic for evaluating a state
   ? ARG_HEURISTIC, // Arguments to pass to the heuristic

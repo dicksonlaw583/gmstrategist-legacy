@@ -23,7 +23,7 @@ configs = MctsConfigs(
   mcts_select,
   GmstArray(mcts_expand, ruleset),
   GmstArray(mcts_playout, ruleset),
-  tictactoe_interpret_result,
+  tictactoe_interpret_result_mcts,
   mcts_reweight,
   undefined,
   true
@@ -44,7 +44,7 @@ configs = MctsConfigs(
   mcts_select,
   GmstArray(mcts_expand, ruleset),
   GmstArray(mcts_playout, ruleset),
-  tictactoe_interpret_result,
+  tictactoe_interpret_result_mcts,
   mcts_reweight,
   undefined,
   false
