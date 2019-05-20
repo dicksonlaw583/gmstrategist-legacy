@@ -6,6 +6,10 @@ Return the best immediate next move, as indicated by the given tree.
   // Capture parameters
   var root = argument0[MCTS_TREE.ROOT],
       children = root[MCTS_NODE.CHILDREN];
+  // If the tree is completely unexpanded, return undefined
+  if (!is_array(children) || array_length_1d(children) == 0) {
+    return undefined;
+  }
   // Tentatively, first child is best
   var best_child = children[0],
       best_visits = best_child[MCTS_NODE.VISITS];

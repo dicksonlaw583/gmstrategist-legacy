@@ -5,10 +5,14 @@ Return the sequence of best moves for each player in sequence, as indicated by t
 {
   // Capture parameters
   var current_node = argument0[MCTS_TREE.ROOT],
-      current_node_children = current_node[MCTS_NODE.CHILDREN],
-      current_node_children_count = array_length_1d(current_node_children);
+      current_node_children = current_node[MCTS_NODE.CHILDREN];
+  // If the tree is completely unexpanded, return undefined
+  if (!is_array(current_node_children) || array_length_1d(current_node_children) == 0) {
+    return undefined;
+  }
   // Set up move sequence to return
-  var move_sequence = array_create(0),
+  var current_node_children_count = array_length_1d(current_node_children),
+      move_sequence = array_create(0),
       move_sequence_length = 0;
   // As long as the current_node has children
   while (current_node_children_count > 0) {
@@ -30,7 +34,12 @@ Return the sequence of best moves for each player in sequence, as indicated by t
     // Change current node to best child
     current_node = best_child;
     current_node_children = current_node[MCTS_NODE.CHILDREN];
-    current_node_children_count = array_length_1d(current_node_children);
+    // Stop if that child is no expanded children
+    if (is_undefined(current_node_children)) {
+      return move_sequence;
+    } else {
+      current_node_children_count = array_length_1d(current_node_children);
+    }
   }
   // Return move sequence
   return move_sequence;

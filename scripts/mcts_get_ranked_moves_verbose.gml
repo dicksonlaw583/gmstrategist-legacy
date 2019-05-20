@@ -9,10 +9,14 @@ result[n, 3] = Weight
 {
   // Capture parameters
   var root = argument0[MCTS_TREE.ROOT],
-      children = root[MCTS_NODE.CHILDREN],
-      children_count = array_length_1d(children);
+      children = root[MCTS_NODE.CHILDREN];
+  // If the tree is completely unexpanded, return undefined
+  if (!is_array(children) || array_length_1d(children) == 0) {
+    return undefined;
+  }
   // Create priority queue of moves
-  var pq = ds_priority_create();
+  var children_count = array_length_1d(children),
+      pq = ds_priority_create();
   // For each child of the root
   for (var i = children_count-1; i >= 0; i--) {
     // Insert its move number into the queue with visits as the priority
