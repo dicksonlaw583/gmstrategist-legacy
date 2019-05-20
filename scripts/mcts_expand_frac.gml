@@ -6,13 +6,14 @@ Expand up to the given fraction of random possible moves from the given node sta
   // Capture parameters
   var node = argument0,
       node_state = argument1,
-      ruleset = argument2[0],
-      node_children = node[MCTS_NODE.CHILDREN];
+      ruleset = argument2[0];
   // Compute information about the given state
   var moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], node_state),
       moves_available = array_length_1d(moves),
       last_player = script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], node_state),
-      n = ceil(argument2[1]*moves_available);
+      n = ceil(argument2[1]*moves_available),
+      node_children = array_create(n);
+  node[@MCTS_NODE.PLAYER] = last_player;
   // If there are no more moves, return undefined right away
   if (moves_available == 0) {
     return undefined;
@@ -37,11 +38,15 @@ Expand up to the given fraction of random possible moves from the given node sta
       undefined, // << This is important: It marks an unexplored node!
       0,
       0,
-      array_create(0)
+      undefined,
+      undefined,
+      undefined
     );
   }
   // Clean shuffling list
   ds_list_destroy(shuffle);
+  // Set node's children
+  node[@MCTS_NODE.CHILDREN] = node_children;
   // Return the first child node
   return node_children[0];
 }

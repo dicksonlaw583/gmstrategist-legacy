@@ -9,10 +9,15 @@ Return an array of nodes in the selection, starting from the given node.
       _ = argument1;
   // Get info on children of given node
   var node_children = node[MCTS_NODE.CHILDREN],
-      node_children_count = array_length_1d(node_children);
+      node_children_count;
   // Initialize selection path with the given node as first
   var select_path = array_create(1);
   select_path[0] = node;
+  if (is_undefined(node_children)) {
+    return select_path;
+  } else {
+    node_children_count = array_length_1d(node_children);
+  }
   // As long as the current node has been expanded
   while (node_children_count > 0) {
     // Assume the first child node is the best until further evidence
@@ -39,6 +44,11 @@ Return an array of nodes in the selection, starting from the given node.
     // Prepare the next iteration (guaranteed to stop if it's an unexplored node)
     node = best_node;
     node_children = node[MCTS_NODE.CHILDREN];
+    if (is_undefined(node_children)) {
+      return select_path;
+    } else {
+      node_children_count = array_length_1d(node_children);
+    }
     node_children_count = array_length_1d(node_children);
   }
   // Path done

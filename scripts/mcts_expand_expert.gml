@@ -9,12 +9,13 @@ The expert script takes the state as the first argument and arg as the second ar
       node_state = argument1,
       ruleset = argument2[0],
       scr_expert = argument2[1],
-      arg_expert = argument2[2],
-      node_children = node[MCTS_NODE.CHILDREN];
+      arg_expert = argument2[2];
   // Use the given expert script to get recommended moves
   var moves = script_execute(scr_expert, node_state, arg_expert),
       moves_available = array_length_1d(moves),
-      last_player = script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], node_state);
+      last_player = script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], node_state),
+      node_children = array_create(moves_available);
+  node[@MCTS_NODE.PLAYER] = last_player;
   // If there are no more moves, return undefined right away
   if (moves_available == 0) {
     return undefined;
@@ -30,9 +31,13 @@ The expert script takes the state as the first argument and arg as the second ar
       undefined, // << This is important: It marks an unexplored node!
       0,
       0,
-      array_create(0)
+      undefined,
+      undefined,
+      undefined
     );
   }
+  // Set node's children
+  node[@MCTS_NODE.CHILDREN] = node_children;
   // Return the first child node
   return node_children[0];
 }

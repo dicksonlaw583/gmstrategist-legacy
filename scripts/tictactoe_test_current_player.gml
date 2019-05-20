@@ -1,6 +1,6 @@
 ///tictactoe_test_current_player()
 
-var _ = undefined,
+var _ = -1,
     O = 0,
     X = 1;
 var got, expected, fixture;

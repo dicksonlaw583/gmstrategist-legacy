@@ -89,6 +89,7 @@
       <scripts name="Integration">
         <script>scripts\gmst_itest_all.gml</script>
         <script>scripts\gmst_itest_sanity.gml</script>
+        <script>scripts\gmst_itest_mcts.gml</script>
       </scripts>
     </scripts>
     <scripts name="ExampleGames">
@@ -101,6 +102,7 @@
         <script>scripts\tictactoe_is_legal.gml</script>
         <script>scripts\tictactoe_apply_move.gml</script>
         <script>scripts\tictactoe_playout_result.gml</script>
+        <script>scripts\tictactoe_interpret_result.gml</script>
       </scripts>
       <scripts name="IntransitiveDice">
         <script>scripts\IntransitiveDiceState.gml</script>
@@ -124,6 +126,7 @@
         <script>scripts\tictactoe_test_is_legal.gml</script>
         <script>scripts\tictactoe_test_apply_move.gml</script>
         <script>scripts\tictactoe_test_playout_result.gml</script>
+        <script>scripts\tictactoe_test_interpret_result.gml</script>
       </scripts>
       <scripts name="IntransitiveDice">
         <script>scripts\intransitivedice_test_all.gml</script>
