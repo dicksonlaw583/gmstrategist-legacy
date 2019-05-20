@@ -7,9 +7,9 @@ See RawMmTree() for implementation details.
   return RawMmTree(
     MmNode(
       undefined,
-      script_execute(argument2[MM_CONFIGS.SCR_POLARITY], script_execute(argument1[RULESET.SCR_CURRENT_PLAYER], argument0)),
+      script_execute(argument2[MM_CONFIGS.SCR_POLARITY], script_execute(argument1[RULESET.SCR_CURRENT_PLAYER], argument0), argument0, argument2[MM_CONFIGS.ARG_POLARITY]),
       undefined,
-      array_create(0)
+      undefined
     ),
     script_execute(argument1[RULESET.SCR_ENCODE], argument0),
     argument1,

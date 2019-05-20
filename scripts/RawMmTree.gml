@@ -4,14 +4,14 @@ Build a raw minimax tree.
 
 MmTree[
   MmNode ROOT, // Root node
-  SerializedState ROOT_PICKLE, // Serialized root state
+  SerializedState|undefined ROOT_PICKLE, // Serialized version of root state (undefined when node state mode is on)
   Ruleset RULESET, // Ruleset
   MmConfigs CONFIGS, // Minimax configurations
 ]
 */
 enum MM_TREE {
   ROOT, //MmNode
-  ROOT_PICKLE, //SerializedState
+  ROOT_PICKLE, //SerializedState|undefined
   RULESET, //Ruleset
   CONFIGS //MmConfigs
 }

@@ -57,8 +57,25 @@ fixture = GmstArray(4, 5, 6, 7);
 expected = GmstArray(4, 5, 6, 7);
 got = gmst_array_clone(fixture);
 assert_equal(got, fixture, "gmst_array_clone failed!");
-fixture[0] = 9;
+fixture[@ 0] = 9;
 assert_equal(got, expected, "gmst_array_clone did not create an independent copy!");
+got = undefined;
+expected = undefined;
+fixture = undefined;
+
+// gmst_array_overwrite
+fixture = GmstArray(4, 5, 6, 7);
+expected = GmstArray(4, 5, 6, 7);
+got = GmstArray(0, 1, 2, 3);
+assert_isnt_defined(gmst_array_overwrite(fixture, got), "gmst_array_overwrite did not return undefined!");
+fixture[@ 0] = -4;
+assert_equal(got, expected, "gmst_array_overwrite did not write an independent result!");
+fixture[@ 0] = 4;
+// gmst_array_overwrite with undefined second argument
+got = gmst_array_overwrite(fixture, undefined);
+assert_equal(got, expected, "gmst_array_overwrite with undefined target did not return a new copy!");
+fixture[@ 0] = -4;
+assert_equal(got, expected, "gmst_array_overwrite with undefined target did not write an independent result!");
 got = undefined;
 expected = undefined;
 fixture = undefined;
@@ -68,11 +85,29 @@ fixture = GmstArray(4, "five", GmstArray(6, 7), GmstArray2(2, 2, 0, 1, 2, 3));
 expected = GmstArray(4, "five", GmstArray(6, 7), GmstArray2(2, 2, 0, 1, 2, 3));
 got = gmst_array_clone_deep(fixture);
 assert_equal(got, fixture, "gmst_array_clone_deep failed!");
-fixture[0] = 9;
+fixture[@ 0] = 9;
 assert_equal(got, expected, "gmst_array_clone_deep did not create an independent copy!");
 var fixture_subarray = fixture[2];
 fixture_subarray[@ 0] = 5;
 assert_equal(got, expected, "gmst_array_clone_deep did not create an independent subcopy!");
+got = undefined;
+expected = undefined;
+fixture = undefined;
+
+// gmst_array_overwrite_deep
+fixture = GmstArray(4, "five", GmstArray(6, 7), GmstArray2(2, 2, 0, 1, 2, 3));
+expected = GmstArray(4, "five", GmstArray(6, 7), GmstArray2(2, 2, 0, 1, 2, 3));
+got = GmstArray(-4, "negfive", GmstArray(-6, -7), GmstArray2(2, 2, -1, -2, -3, -4));
+assert_isnt_defined(gmst_array_overwrite_deep(fixture, got), "gmst_array_overwrite_deep did not return undefined!");
+var fixture_subarray = fixture[2];
+fixture_subarray[@ 0] = 666;
+assert_equal(got, expected, "gmst_array_overwrite_deep did not create an independent copy!");
+fixture_subarray[@ 0] = 6;
+// gmst_array_overwrite_deep with undefined second argument
+got = gmst_array_overwrite_deep(fixture, undefined);
+assert_equal(got, expected, "gmst_array_overwrite_deep with undefined target did not return a new copy!");
+fixture[@ 0] = -4;
+assert_equal(got, expected, "gmst_array_overwrite_deep with undefined target did not write an independent result!");
 got = undefined;
 expected = undefined;
 fixture = undefined;

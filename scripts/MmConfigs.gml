@@ -1,4 +1,4 @@
-///MmConfigs(scr_polarity, scr_heuristic, scr_interpret_result)
+///MmConfigs(scr_polarity, scr_heuristic, scr_interpret_result, scr_presample, node_state_mode)
 /**
 Build a new set of Minimax configurations.
 
@@ -8,7 +8,10 @@ MmConfigs[
   (State s, ? arg => Real) SCR_HEURISTIC, // The heuristic for evaluating a state
   ? ARG_HEURISTIC, // Arguments to pass to the heuristic
   (PlayoutResult pr, State s, ? arg => Real) SCR_INTERPRET_RESULT, // Return the reward according to the playout
-  ? ARG_INTERPRET_RESULT // Arguments to pass to scr_interpret_result
+  ? ARG_INTERPRET_RESULT, // Arguments to pass to scr_interpret_result
+  (State s, ? arg => Move;Real[])|undefined SCR_PRESAMPLE, // Return a 2D array with [n, 0] for a move and [n, 1] for its weight
+  ? ARG_PRESAMPLE, // Arguments to pass to scr_presample
+  Bool NODE_STATE_MODE // Whether memos are stored in every node (true) or only at the tree's top level (false)
 ]
 */
 enum MM_CONFIGS {
@@ -17,12 +20,15 @@ enum MM_CONFIGS {
   SCR_HEURISTIC,
   ARG_HEURISTIC,
   SCR_INTERPRET_RESULT,
-  ARG_INTERPRET_RESULT
+  ARG_INTERPRET_RESULT,
+  SCR_PRESAMPLE,
+  ARG_PRESAMPLE,
+  NODE_STATE_MODE
 }
 {
-  var _configs = array_create(6);
-  // For each argument:
-  for (var i = 0; i < 3; i++) {
+  var _configs = array_create(9);
+  // For each argument before node state mode:
+  for (var i = 0; i < 4; i++) {
     var _arg = argument[i];
     // If the argument is an array:
     if (is_array(_arg)) {
@@ -46,6 +52,8 @@ enum MM_CONFIGS {
       _configs[(i<<1)+1] = undefined;
     }
   }
+  // Node state mode
+  _configs[MM_CONFIGS.NODE_STATE_MODE] = argument[4];
   // Done
   return _configs;
 }

@@ -4,7 +4,7 @@ This is the low-level constructor for MctsTree. Use MctsTree() for non-testing s
 
 MctsTree[
   MctsNode ROOT, // Root node
-  SerializedState ROOT_PICKLE, // Serialized version of root state
+  SerializedState|undefined ROOT_PICKLE, // Serialized version of root state (undefined when node state mode is on)
   Ruleset RULESET, // Ruleset
   MctsConfigs CONFIGS, // MCTS configurations
 ]

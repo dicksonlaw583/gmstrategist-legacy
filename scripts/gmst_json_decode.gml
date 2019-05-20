@@ -3,5 +3,5 @@
 Decode the given JSON string.
 */
 {
-  return json_decode(argument0);
+  return json_decode(argument[0]);
 }

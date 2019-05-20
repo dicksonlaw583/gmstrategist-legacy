@@ -25,7 +25,9 @@
         <script>scripts\lattice_get_height.gml</script>
         <script>scripts\gmst_identity.gml</script>
         <script>scripts\gmst_array_clone.gml</script>
+        <script>scripts\gmst_array_overwrite.gml</script>
         <script>scripts\gmst_array_clone_deep.gml</script>
+        <script>scripts\gmst_array_overwrite_deep.gml</script>
         <script>scripts\gmst_json_decode.gml</script>
         <script>scripts\gmst_json_encode.gml</script>
         <script>scripts\gmst_json_cleanup.gml</script>
