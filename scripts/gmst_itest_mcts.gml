@@ -35,7 +35,7 @@ state = TicTacToeState(
   X
 );
 tree = MctsTree(state, ruleset, configs);
-mcts_evaluate(tree, 8, 100, 1000, 500);
+mcts_evaluate(tree, 8, 100, 1200, 1000);
 expected = 4;
 got = mcts_get_best_move(tree)
 assert_equal(got, expected, "mcts_evaluate failed to get perfect reply to corner tic-tac-toe opening! (node state mode)");
@@ -56,7 +56,7 @@ state = TicTacToeState(
   O
 );
 tree = MctsTree(state, ruleset, configs);
-mcts_evaluate(tree, 8, 100, 1000, 500);
+mcts_evaluate(tree, 8, 100, 1000, 1000);
 expected = 4;
 got = mcts_get_best_move(tree)
 assert_equal(got, expected, "mcts_evaluate failed to get perfect reply to corner tic-tac-toe opening! (root state mode)");

@@ -32,7 +32,7 @@ switch (argument0) {
       X
     );
     tree = MmTree(state, ruleset, configs);
-    tree_daemon = mm_evaluate_in_background(tree, 8);
+    tree_daemon = mm_evaluate_in_background(tree, 6);
     return true;
     break;
   case TEST_PHASE.RUNNING:

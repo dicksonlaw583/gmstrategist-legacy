@@ -319,7 +319,7 @@ if (async_load[? "id"] == ih_input) {
         // Multiple moves, create a tree
         else {
           hint_tree = MctsTree(state, ruleset, configs);
-          hint_evaluation_daemon = mcts_evaluate_in_background(hint_tree, max_playout_plies, max_eval_playouts, max_playout_ms, max_eval_ms);
+          hint_evaluation_daemon = mcts_evaluate_in_background(hint_tree, max_playout_plies, max_playout_ms, max_eval_playouts, max_eval_ms);
         }
         exit;
       // Restart with the same opening game state
@@ -531,9 +531,8 @@ if (!script_execute(ruleset[RULESET.SCR_IS_FINAL], state)) {
   input = "";
   switch (current_agency) {
     // Tree
-    
     case TEXT_GAMESET_AGENCY.MAIN_TREE:
-      evaluation_daemon = mcts_evaluate_in_background(tree, max_playout_plies, max_eval_playouts, max_playout_ms, max_eval_ms);
+      evaluation_daemon = mcts_evaluate_in_background(tree, max_playout_plies, max_playout_ms, max_eval_playouts, max_eval_ms);
     break;
     // Player input
     case TEXT_GAMESET_AGENCY.USER_INPUT:

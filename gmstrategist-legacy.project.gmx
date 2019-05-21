@@ -110,6 +110,17 @@
         <script>scripts\tictactoe_interpret_result_mcts.gml</script>
         <script>scripts\tictactoe_interpret_result_mm.gml</script>
         <script>scripts\tictactoe_heuristic.gml</script>
+        <script>scripts\tictactoe_trial_play_mcts.gml</script>
+        <script>scripts\tictactoe_trial_play_mcts_async.gml</script>
+        <script>scripts\tictactoe_trial_play_mm.gml</script>
+        <script>scripts\tictactoe_trial_play_mm_async.gml</script>
+        <script>scripts\tictactoe_new_game.gml</script>
+        <script>scripts\tictactoe_agency.gml</script>
+        <script>scripts\tictactoe_player_name.gml</script>
+        <script>scripts\tictactoe_state_display.gml</script>
+        <script>scripts\tictactoe_move_output.gml</script>
+        <script>scripts\tictactoe_move_input.gml</script>
+        <script>scripts\tictactoe_playout_comment.gml</script>
       </scripts>
       <scripts name="IntransitiveDice">
         <script>scripts\IntransitiveDiceState.gml</script>
@@ -136,6 +147,13 @@
         <script>scripts\tictactoe_test_interpret_result_mcts.gml</script>
         <script>scripts\tictactoe_test_interpret_result_mm.gml</script>
         <script>scripts\tictactoe_test_heuristic.gml</script>
+        <script>scripts\tictactoe_test_new_game.gml</script>
+        <script>scripts\tictactoe_test_agency.gml</script>
+        <script>scripts\tictactoe_test_player_name.gml</script>
+        <script>scripts\tictactoe_test_state_display.gml</script>
+        <script>scripts\tictactoe_test_move_output.gml</script>
+        <script>scripts\tictactoe_test_move_input.gml</script>
+        <script>scripts\tictactoe_test_playout_comment.gml</script>
       </scripts>
       <scripts name="IntransitiveDice">
         <script>scripts\intransitivedice_test_all.gml</script>

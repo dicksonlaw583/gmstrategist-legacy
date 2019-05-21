@@ -68,16 +68,21 @@ ai_output and ai_verbose accept the same arguments as mm_output_ranked_moves().
                   mm_evaluate(hint_tree, max_depth);
                   recommendation = script_execute(text_gameset[TEXT_GAMESET.SCR_MOVE_OUTPUT], mm_get_best_move(hint_tree));
                   show_message(script_execute(_scr_state_display, state) + lflf + "Suggested Move: " + recommendation + lflf + mm_output_ranked_moves(hint_tree, text_gameset, TEXT_OUTPUT.STRING, true));
+                  hint_tree[MM_TREE.ROOT] = undefined;
+                  hint_tree = undefined;
                 }
                 continue;
               // Restart with the same opening game state
               case ":restart":
-                if (!is_undefined(ruleset[RULESET.SCR_CLEANUP])) {
-                  script_execute(ruleset[RULESET.SCR_CLEANUP], state);
-                }
                 tree[MM_TREE.ROOT] = undefined;
                 tree = undefined;
-                state = script_execute(ruleset[RULESET.SCR_DECODE], state_pickle);
+                var decoded_state = script_execute(ruleset[RULESET.SCR_DECODE], state_pickle, state);
+                if (!is_undefined(decoded_state)) {
+                  if (!is_undefined(ruleset[RULESET.SCR_CLEANUP])) {
+                    script_execute(ruleset[RULESET.SCR_CLEANUP], state);
+                  }
+                  state = decoded_state;
+                }
                 tree = MmTree(state, ruleset, configs);
                 show_message("Game restarted:" + lflf + script_execute(_scr_state_display, state) + lflf + script_execute(text_gameset[TEXT_GAMESET.SCR_PLAYER_NAME], script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], state)) + " plays first.");
                 continue;

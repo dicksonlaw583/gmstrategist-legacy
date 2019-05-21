@@ -7,10 +7,17 @@ Change the tree's root to the state after making the given moves in sequence.
   var tree = argument0,
       reroot_moves = argument1,
       reroot_moves_count = array_length_1d(reroot_moves),
-      ruleset = tree[MCTS_TREE.RULESET];
+      ruleset = tree[MCTS_TREE.RULESET],
+      config = tree[MCTS_TREE.CONFIGS],
+      node_state_mode = config[MCTS_CONFIG.NODE_STATE_MODE];
   // Get temporary state for the current root
-  var state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MCTS_TREE.ROOT_PICKLE]),
-      new_root = tree[MCTS_TREE.ROOT];
+  var new_root = tree[MCTS_TREE.ROOT];
+  var state;
+  if (node_state_mode) {
+    state = script_execute(ruleset[RULESET.SCR_DECODE], new_root[MCTS_NODE.MEMO], undefined);
+  } else {
+    state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MCTS_TREE.ROOT_PICKLE], undefined);
+  }
   // For each move to apply
   for (var i = 0; i < reroot_moves_count; i++) {
     var move = reroot_moves[i];
@@ -42,18 +49,35 @@ Change the tree's root to the state after making the given moves in sequence.
   }
   // If the new root isn't already computed, create it
   if (is_undefined(new_root)) {
-    new_root = MctsNode(
-      undefined,
-      undefined,
-      0,
-      0,
-      0,
-      array_create(0)
-    );
+    if (node_state_mode) {
+      new_root = MctsNode(
+        undefined,
+        undefined,
+        0,
+        0,
+        0,
+        undefined,
+        script_execute(ruleset[RULESET.SCR_ENCODE], state),
+        undefined
+      );
+    } else {
+      new_root = MctsNode(
+        undefined,
+        undefined,
+        0,
+        0,
+        0,
+        undefined,
+        undefined,
+        undefined
+      );
+    }
   }
-  // Update the root pickle
-  tree[@MCTS_TREE.ROOT_PICKLE] = undefined;
-  tree[@MCTS_TREE.ROOT_PICKLE] = script_execute(ruleset[RULESET.SCR_ENCODE], state);
+  // Update the root pickle if root state mode
+  if (!node_state_mode) {
+    tree[@MCTS_TREE.ROOT_PICKLE] = undefined;
+    tree[@MCTS_TREE.ROOT_PICKLE] = script_execute(ruleset[RULESET.SCR_ENCODE], state);
+  }
   // Clean up the state if applicable
   if (!is_undefined(ruleset[RULESET.SCR_CLEANUP])) {
     script_execute(ruleset[RULESET.SCR_CLEANUP], state);

@@ -15,6 +15,13 @@ tictactoe_test_playout_result();
 tictactoe_test_interpret_result_mcts();
 tictactoe_test_interpret_result_mm();
 tictactoe_test_heuristic();
+tictactoe_test_new_game();
+tictactoe_test_agency();
+tictactoe_test_player_name();
+tictactoe_test_state_display();
+tictactoe_test_move_output();
+tictactoe_test_move_input();
+tictactoe_test_playout_comment();
 
 // End tests
 time_b = current_time;
