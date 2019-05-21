@@ -9,7 +9,7 @@ MmConfigs[
   ? ARG_HEURISTIC, // Arguments to pass to the heuristic
   (PlayoutResult pr, State s, ? arg => Real) SCR_INTERPRET_RESULT, // Return the reward according to the playout
   ? ARG_INTERPRET_RESULT, // Arguments to pass to scr_interpret_result
-  (State s, ? arg => Move;Real[])|undefined SCR_PRESAMPLE, // Return a 2D array with [n, 0] for a move and [n, 1] for its weight
+  (State s, ? arg => [Move[],Real[]])|undefined SCR_PRESAMPLE, // Return a nested array with [0][n] for a move and [1][n] for its weight
   ? ARG_PRESAMPLE, // Arguments to pass to scr_presample
   Bool NODE_STATE_MODE // Whether memos are stored in every node (true) or only at the tree's top level (false)
 ]
