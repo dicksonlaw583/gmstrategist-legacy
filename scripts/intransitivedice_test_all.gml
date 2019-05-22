@@ -13,6 +13,7 @@ intransitivedice_test_is_final();
 intransitivedice_test_is_legal();
 intransitivedice_test_apply_move();
 intransitivedice_test_playout_result();
+intransitivedice_test_interpret_result_mcts();
 
 // End tests
 time_b = current_time;

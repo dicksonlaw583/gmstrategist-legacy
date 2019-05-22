@@ -12,10 +12,18 @@ This always uses the first generated move from the state, until the game is over
   // For up to the given number of plies 
   var ct = current_time;
   while ((available_plies-- > 0) && (current_time-ct < max_ms) && !script_execute(ruleset[RULESET.SCR_IS_FINAL], state)) {
-    // Enumerate moves at the current state
-    var moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], state);
-    // Apply the first move to the given state
-    script_execute(ruleset[RULESET.SCR_APPLY_MOVE], state, moves[0]);
+    // If randomizer-controlled
+    if (is_undefined(script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], state))) {
+      // Apply randomizer-given move
+      script_execute(ruleset[RULESET.SCR_APPLY_MOVE], state, script_execute(ruleset[RULESET.SCR_GENERATE_RANDOM], state));
+    }
+    // If player-controlled
+    else {
+      // Enumerate moves at the current state
+      var moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], state);
+      // Apply the first move to the given state
+      script_execute(ruleset[RULESET.SCR_APPLY_MOVE], state, moves[0]);
+    }
   }
   // Return the playout
   return script_execute(ruleset[RULESET.SCR_PLAYOUT_RESULT], state);

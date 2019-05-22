@@ -13,9 +13,13 @@ Evaluate the given tree using the given limit on plies per playout, time per pla
       tree_configs = tree[MCTS_TREE.CONFIGS],
       node_state_mode = tree_configs[MCTS_CONFIG.NODE_STATE_MODE];
   var start_time = current_time,
-      playouts = 0,
-      play_state = undefined,
-      new_play_state;
+      playouts = 0;
+  var play_state, new_play_state;
+  if (node_state_mode) {
+    play_state = script_execute(tree_ruleset[RULESET.SCR_DECODE], tree_root[MCTS_NODE.MEMO], undefined);
+  } else {
+    play_state = script_execute(tree_ruleset[RULESET.SCR_DECODE], tree[MCTS_TREE.ROOT_PICKLE], undefined);
+  }
   do {
     // Select (1): Use the provided seletion strategy to dig down the tree for a node to expand
     var path = script_execute(tree_configs[MCTS_CONFIG.SCR_SELECT], tree_root, tree_configs[MCTS_CONFIG.ARG_SELECT]);
@@ -65,7 +69,12 @@ Evaluate the given tree using the given limit on plies per playout, time per pla
     // Playout (3): Determine a result from the expanded node's state.
     // If not found, use the playout strategy on the experimental state to determine its result
     else {
-      var play_node = script_execute(tree_configs[MCTS_CONFIG.SCR_EXPAND], path[path_size-1], play_state, tree_configs[MCTS_CONFIG.ARG_EXPAND]);
+      var play_node;
+      if (is_undefined(script_execute(tree_ruleset[RULESET.SCR_CURRENT_PLAYER], play_state))) {
+        play_node = script_execute(tree_configs[MCTS_CONFIG.SCR_PRESAMPLE], path[path_size-1], play_state, tree_configs[MCTS_CONFIG.ARG_PRESAMPLE]);
+      } else {
+        play_node = script_execute(tree_configs[MCTS_CONFIG.SCR_EXPAND], path[path_size-1], play_state, tree_configs[MCTS_CONFIG.ARG_EXPAND]);
+      }
       script_execute(tree_ruleset[RULESET.SCR_APPLY_MOVE], play_state, play_node[MCTS_NODE.LAST_MOVE]);
       if (node_state_mode) {
         play_node[@MCTS_NODE.MEMO] = script_execute(tree_ruleset[RULESET.SCR_ENCODE], play_state);
@@ -80,16 +89,16 @@ Evaluate the given tree using the given limit on plies per playout, time per pla
     for (var i = 1; i < path_size; i++) {
       var node = path[i];
       node[@MCTS_NODE.VISITS]++;
-      if (!is_undefined(node[MCTS_NODE.PLAYER])) {
+      if (!is_undefined(parent_node[MCTS_NODE.PLAYER])) {
         script_execute(tree_configs[MCTS_CONFIG.SCR_REWEIGHT], node, parent_node, script_execute(tree_configs[MCTS_CONFIG.SCR_INTERPRET], play_state, playout_result, node[MCTS_NODE.LAST_PLAYER], tree_configs[MCTS_CONFIG.ARG_INTERPRET]), tree_configs[MCTS_CONFIG.ARG_REWEIGHT]);
       }
       parent_node = node;
     }
-    // Cleanup: Call the cleanup strategy of the tree to free resources allocated to the experimental play state.
-    if (!is_undefined(tree_ruleset[RULESET.SCR_CLEANUP])) {
-      script_execute(tree_ruleset[RULESET.SCR_CLEANUP], play_state);
-    }
     // This is necessary only if the live state uses dynamically allocated resources that need manual freeing, e.g. ds_* data structures
-  } until ((current_time-start_time >= max_total_ms) || (playouts++ > max_total_playouts));
+  } until ((playouts++ > max_total_playouts) || (current_time-start_time >= max_total_ms));
+  // Cleanup: Call the cleanup strategy of the tree to free resources allocated to the experimental play state.
+  if (!is_undefined(tree_ruleset[RULESET.SCR_CLEANUP])) {
+    script_execute(tree_ruleset[RULESET.SCR_CLEANUP], play_state);
+  }
   return playouts;
 }

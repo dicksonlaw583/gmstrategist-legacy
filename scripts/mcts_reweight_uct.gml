@@ -10,6 +10,6 @@ Reweight the given node by adding the given reward, using the custom learning UC
       c = argument3;
   // Accumulate the reward
   node[@MCTS_NODE.REWARD] += reward;
-  // Overwrite the node's weight with UCT
+  // Overwrite the node's weight with UCT (unless it is a randomizer node)
   node[@MCTS_NODE.WEIGHT] = node[MCTS_NODE.REWARD]/node[MCTS_NODE.VISITS] + c*sqrt(ln(parent[MCTS_NODE.VISITS]+1)/node[MCTS_NODE.VISITS]);
 }
