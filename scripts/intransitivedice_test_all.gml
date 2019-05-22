@@ -15,6 +15,7 @@ intransitivedice_test_apply_move();
 intransitivedice_test_playout_result();
 intransitivedice_test_interpret_result_mcts();
 intransitivedice_test_interpret_result_mm();
+intransitivedice_test_heuristic();
 intransitivedice_test_new_game();
 intransitivedice_test_agency();
 intransitivedice_test_player_name();

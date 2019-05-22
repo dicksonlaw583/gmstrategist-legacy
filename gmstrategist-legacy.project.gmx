@@ -142,6 +142,7 @@
         <script>scripts\intransitivedice_playout_result.gml</script>
         <script>scripts\intransitivedice_interpret_result_mcts.gml</script>
         <script>scripts\intransitivedice_interpret_result_mm.gml</script>
+        <script>scripts\intransitivedice_heuristic.gml</script>
         <script>scripts\intransitivedice_trial_play_emcts.gml</script>
         <script>scripts\intransitivedice_trial_play_emcts_async.gml</script>
         <script>scripts\intransitivedice_new_game.gml</script>
@@ -186,6 +187,7 @@
         <script>scripts\intransitivedice_test_playout_result.gml</script>
         <script>scripts\intransitivedice_test_interpret_result_mcts.gml</script>
         <script>scripts\intransitivedice_test_interpret_result_mm.gml</script>
+        <script>scripts\intransitivedice_test_heuristic.gml</script>
         <script>scripts\intransitivedice_test_new_game.gml</script>
         <script>scripts\intransitivedice_test_agency.gml</script>
         <script>scripts\intransitivedice_test_player_name.gml</script>
