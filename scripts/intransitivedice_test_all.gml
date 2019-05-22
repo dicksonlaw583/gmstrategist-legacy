@@ -14,6 +14,14 @@ intransitivedice_test_is_legal();
 intransitivedice_test_apply_move();
 intransitivedice_test_playout_result();
 intransitivedice_test_interpret_result_mcts();
+intransitivedice_test_interpret_result_mm();
+intransitivedice_test_new_game();
+intransitivedice_test_agency();
+intransitivedice_test_player_name();
+intransitivedice_test_state_display();
+intransitivedice_test_move_output();
+intransitivedice_test_move_input();
+intransitivedice_test_playout_comment();
 
 // End tests
 time_b = current_time;

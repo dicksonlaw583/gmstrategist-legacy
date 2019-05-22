@@ -98,7 +98,9 @@
         <script>scripts\gmst_itest_mm.gml</script>
         <script>scripts\gmst_itest_sanity.gml</script>
         <script>scripts\gmst_itest_mcts_node_state_async.gml</script>
+        <script>scripts\gmst_itest_emcts_node_state_async.gml</script>
         <script>scripts\gmst_itest_mcts_root_state_async.gml</script>
+        <script>scripts\gmst_itest_emcts_root_state_async.gml</script>
         <script>scripts\gmst_itest_mm_node_state_async.gml</script>
         <script>scripts\gmst_itest_mm_root_state_async.gml</script>
       </scripts>
@@ -138,6 +140,17 @@
         <script>scripts\intransitivedice_is_legal.gml</script>
         <script>scripts\intransitivedice_apply_move.gml</script>
         <script>scripts\intransitivedice_playout_result.gml</script>
+        <script>scripts\intransitivedice_interpret_result_mcts.gml</script>
+        <script>scripts\intransitivedice_interpret_result_mm.gml</script>
+        <script>scripts\intransitivedice_trial_play_emcts.gml</script>
+        <script>scripts\intransitivedice_trial_play_emcts_async.gml</script>
+        <script>scripts\intransitivedice_new_game.gml</script>
+        <script>scripts\intransitivedice_agency.gml</script>
+        <script>scripts\intransitivedice_player_name.gml</script>
+        <script>scripts\intransitivedice_state_display.gml</script>
+        <script>scripts\intransitivedice_move_output.gml</script>
+        <script>scripts\intransitivedice_move_input.gml</script>
+        <script>scripts\intransitivedice_playout_comment.gml</script>
       </scripts>
     </scripts>
     <scripts name="ExampleGamesTest">
@@ -171,6 +184,15 @@
         <script>scripts\intransitivedice_test_is_legal.gml</script>
         <script>scripts\intransitivedice_test_apply_move.gml</script>
         <script>scripts\intransitivedice_test_playout_result.gml</script>
+        <script>scripts\intransitivedice_test_interpret_result_mcts.gml</script>
+        <script>scripts\intransitivedice_test_interpret_result_mm.gml</script>
+        <script>scripts\intransitivedice_test_new_game.gml</script>
+        <script>scripts\intransitivedice_test_agency.gml</script>
+        <script>scripts\intransitivedice_test_player_name.gml</script>
+        <script>scripts\intransitivedice_test_state_display.gml</script>
+        <script>scripts\intransitivedice_test_move_output.gml</script>
+        <script>scripts\intransitivedice_test_move_input.gml</script>
+        <script>scripts\intransitivedice_test_playout_comment.gml</script>
       </scripts>
     </scripts>
   </scripts>
