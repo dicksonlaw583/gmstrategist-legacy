@@ -1,6 +1,7 @@
 ///gmst_itest_sanity(phase)
 switch (argument0) {
   case TEST_PHASE.SETUP:
+    ___current_test_name___ = "Async integration tester sanity";
     testvar = 583;
     return true;
     break;

@@ -59,6 +59,9 @@
         <script>scripts\mcts_playout_first.gml</script>
         <script>scripts\mcts_reweight.gml</script>
         <script>scripts\mcts_reweight_uct.gml</script>
+        <script>scripts\mcts_presample_fixed.gml</script>
+        <script>scripts\mcts_presample_expert.gml</script>
+        <script>scripts\mcts_presample_empirical.gml</script>
       </scripts>
       <scripts name="Minimax">
         <script>scripts\MmTree.gml</script>
@@ -77,6 +80,9 @@
         <script>scripts\mm_output_ranked_moves.gml</script>
         <script>scripts\mm_trial_play.gml</script>
         <script>scripts\mm_trial_play_async.gml</script>
+        <script>scripts\mm_presample_fixed.gml</script>
+        <script>scripts\mm_presample_expert.gml</script>
+        <script>scripts\mm_presample_empirical.gml</script>
       </scripts>
     </scripts>
     <scripts name="GmStrategistTest">
