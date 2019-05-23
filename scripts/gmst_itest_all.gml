@@ -5,7 +5,9 @@ var time_a, time_b;
 time_a = current_time;
 
 // Run synchronous tests
+random_set_seed(0);
 gmst_itest_mcts();
+random_set_seed(0);
 gmst_itest_mm();
 
 // End synchronous tests
@@ -21,6 +23,7 @@ if (os_browser == browser_not_a_browser) {
 
 
 // Asynchronous tests
+random_set_seed(0);
 with (instance_create(0, 0, obj_gmst_test_daemon)) {
   ___test___ = GmstArray(
     gmst_itest_sanity,

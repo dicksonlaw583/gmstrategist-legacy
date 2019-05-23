@@ -65,6 +65,7 @@ if (script_execute(___test___[___test_num___], TEST_PHASE.RUNNING)) {
   show_debug_message(___current_test_name___ + " tests completed in " + string(current_time-___current_test_start_time___) + "ms.");
   ___current_test_start_time___ = current_time;
   if (___test_num___ &lt; array_length_1d(___test___)) {
+    random_set_seed(0);
     script_execute(___test___[___test_num___], TEST_PHASE.SETUP);
   } else {
     var msg = "GMStrategist integration tests finished in " + string(current_time-___test_start_time___) + "ms.";
