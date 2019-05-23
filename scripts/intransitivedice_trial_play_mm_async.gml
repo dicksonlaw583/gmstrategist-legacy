@@ -16,7 +16,7 @@ configs = MmConfigs(
   gmst_identity,
   intransitivedice_heuristic,
   intransitivedice_interpret_result_mm,
-  GmstArray(mm_presample_empirical, ruleset, 30),
+  GmstArray(mm_presample_empirical, ruleset, 150),
   true
 );
 text_gameset = TextGameset(

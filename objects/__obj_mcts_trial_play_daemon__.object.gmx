@@ -528,7 +528,9 @@ if (!script_execute(ruleset[RULESET.SCR_IS_FINAL], state)) {
   current_player = script_execute(ruleset[RULESET.SCR_CURRENT_PLAYER], state);
   // Randomizer player makes its own moves
   if (is_undefined(current_player)) {
+    current_agency = undefined;
     move = script_execute(ruleset[RULESET.SCR_GENERATE_RANDOM], state);
+    input = "";
     event_user(1);
   }
   // Non-randomizer player makes their own moves
