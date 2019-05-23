@@ -34,7 +34,7 @@ switch (argument0) {
       X
     );
     tree = MctsTree(state, ruleset, configs);
-    tree_daemon = mcts_evaluate_in_background(tree, 8, 100, 2000, 10000);
+    tree_daemon = mcts_evaluate_in_background(tree, 8, 100, 2500, 10000);
     return true;
     break;
   case TEST_PHASE.RUNNING:
