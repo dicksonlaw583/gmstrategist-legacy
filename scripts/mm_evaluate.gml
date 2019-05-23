@@ -26,6 +26,7 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
   } else {
     current_state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MM_TREE.ROOT_PICKLE], undefined);
   }
+  available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
   // As long as the stack isn't empty
   do {
     // Downwards
@@ -52,8 +53,6 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
       }
       // Not final and has depth to spare, expand
       else {
-        // Generate available moves
-        available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
         // Create a stack frame remembering current state
         if (node_state_mode) {
           ds_stack_push(stack, MmStackFrame(
@@ -109,6 +108,7 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
         }
         // Focus to current child
         current_node = current_node_children[current_child_num];
+        available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
         current_child_num = 0;
         alpha = undefined;
         beta = undefined;

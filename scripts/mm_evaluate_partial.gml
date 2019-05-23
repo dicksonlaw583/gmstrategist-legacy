@@ -33,7 +33,7 @@ The stack is used between calls to this function. This allows non-blocking expan
     } else {
       current_state = script_execute(ruleset[RULESET.SCR_DECODE], tree[MM_TREE.ROOT_PICKLE], undefined);
     }
-    available_moves = undefined;
+    available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
     current_depth = max_depth;
     current_node_children = current_node[MM_NODE.CHILDREN];
     current_child_num = 0;
@@ -58,7 +58,6 @@ The stack is used between calls to this function. This allows non-blocking expan
     total_weight = current_stack_frame[MM_STACK_FRAME.PROGRESS_TOTAL];
     progress_weight = current_stack_frame[MM_STACK_FRAME.PROGRESS_WEIGHT];
   }
-  var 
   // As long as the stack isn't empty and there is time
   var start_time = current_time;
   do {
@@ -86,8 +85,6 @@ The stack is used between calls to this function. This allows non-blocking expan
       }
       // Not final and has depth to spare, expand
       else {
-        // Generate available moves
-        available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
         // Create a stack frame remembering current state
         if (node_state_mode) {
           ds_stack_push(stack, MmStackFrame(
@@ -148,6 +145,7 @@ The stack is used between calls to this function. This allows non-blocking expan
         current_child_num = 0;
         alpha = undefined;
         beta = undefined;
+        available_moves = script_execute(ruleset[RULESET.SCR_GENERATE_MOVES], current_state);
       }
     }
     // Upwards
