@@ -186,9 +186,6 @@ Fully expand the unbuilt minimax tree to the given maximum depth.
               chance_node_child;
           for (var i = array_length_1d(current_node_children)-1; i >= 0; i--) {
             chance_node_child = current_node_children[i];
-            if (is_undefined(chance_node_child[MM_NODE.WEIGHT]) || is_undefined(chance_node_child[MM_NODE.VALUE])) {
-              var breakme = true;
-            }
             chance_node_sum += chance_node_child[MM_NODE.WEIGHT]*chance_node_child[MM_NODE.VALUE];
           }
           current_node[@MM_NODE.VALUE] = chance_node_sum;

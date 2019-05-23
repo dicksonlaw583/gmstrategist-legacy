@@ -27,9 +27,11 @@ with (instance_create(0, 0, obj_gmst_test_daemon)) {
     gmst_itest_mcts_node_state_async,
     gmst_itest_emcts_node_state_async,
     gmst_itest_mm_node_state_async,
+    gmst_itest_emm_node_state_async,
     gmst_itest_mcts_root_state_async,
     gmst_itest_emcts_root_state_async,
-    gmst_itest_mm_root_state_async
+    gmst_itest_mm_root_state_async,
+    gmst_itest_emm_root_state_async,
   );
   script_execute(___test___[0], TEST_PHASE.SETUP);
 }
