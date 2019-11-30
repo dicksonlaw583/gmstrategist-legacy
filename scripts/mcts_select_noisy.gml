@@ -24,10 +24,10 @@ Return an array of nodes in the selection, starting from the given node.
     // If the current node is a chance node
     if (is_undefined(node[MCTS_NODE.PLAYER])) {
       // Choose one of the child nodes by weight
-      selected_node = node_chidren[node_children_count-1];
+      selected_node = node_children[node_children_count-1];
       var rand = random(1);
       for (var i = node_children_count-1; i >= 0; i--) {
-        selected_node = node_chidren[node_children_count-1];
+        selected_node = node_children[node_children_count-1];
         rand -= selected_node[MCTS_NODE.WEIGHT];
         if (rand <= 0) break;
       }
